@@ -2,6 +2,8 @@
     <div class="count">
         <h2>当前求和为：{{ sum }}</h2>
 
+        <h3>欢迎来到：{{ school }}, 坐落于：{{ address }}</h3>
+
         <select v-model.number="n">
             <option value="1">1</option>
             <option value="2">2</option>
@@ -18,18 +20,32 @@
     setup
     name="Count"
 >
-    import {ref} from 'vue'
+    import {ref, toRefs} from 'vue'
+    import {storeToRefs} from 'pinia'
+    import { useCountStore } from '../store/count';
 
-    let sum = ref(1)
+    const countStore = useCountStore()
+
+    // 不推荐，因为会把store所有的属性都进行 ref 包裹
+    // const {sum, school, address} = toRefs(countStore)
+
+    // storeToRefs 只会关注 store 中数据，不会对方法进行 ref 包裹
+    const {sum, school, address} = storeToRefs(countStore)
+
+
+    // 以下两种方式都可以拿到 state 中的数据
+    // console.log('@@', countStore.sum)
+    // console.log('@@', countStore.$state.sum)
+
     let n = ref(1)
 
 
     function add() {
-        sum.value += n.value
+        countStore.increment(n.value)
     }
 
     function minus() {
-        sum.value -= n.value
+        countStore.sum -= n.value
     }
 </script>
 
