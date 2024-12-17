@@ -13,7 +13,7 @@
     lang="ts"
     name="Child1"
 >
-    import emitter from '@/utils/emitter'
+    import emitter from '../..//utils/emitter'
     import {ref} from 'vue'
 
     let toy = ref('奥特曼')

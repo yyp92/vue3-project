@@ -13,7 +13,7 @@
     name="Child2"
 >
     import {ref, onUnmounted} from 'vue'
-    import emitter from '@/utils/emitter'
+    import emitter from '../../utils/emitter'
 
     let computer = ref('电脑')
     let toy = ref('')
