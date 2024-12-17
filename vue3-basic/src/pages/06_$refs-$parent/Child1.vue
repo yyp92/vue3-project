@@ -3,8 +3,9 @@
         <h3>子组件1</h3>
 
         <h4>玩具：{{ toy }}</h4>
+        <h4>书籍：{{ book }}本</h4>
 
-        <button @click="emitter.emit('send-toy', toy)">玩具给弟弟</button>
+        <button @click="minusHouse($parent)">干掉父亲的一套房产</button>
     </div>
 </template>
 
@@ -13,22 +14,30 @@
     lang="ts"
     name="Child1"
 >
-    import emitter from '../../utils/emitter'
     import {ref} from 'vue'
 
     let toy = ref('奥特曼')
+    let book = ref(3)
+
+
+    function minusHouse(parent: any) {
+        parent.house -= 1
+    }
+
+
+    // 把数据交给外部
+    defineExpose({
+        toy,
+        book
+    })
 </script>
 
 <style scoped>
     .child1 {
-        margin-top: 50px;
+        margin-top: 20px;
         background-color: skyblue;
-        padding: 10px;
+        padding: 20px;
         box-shadow: 0 0 10px black;
         border-radius: 10px;
-    }
-
-    .child1 button {
-        margin-right: 10px;
     }
 </style>

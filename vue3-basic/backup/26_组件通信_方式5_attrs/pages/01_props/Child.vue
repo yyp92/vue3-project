@@ -2,10 +2,10 @@
     <div class="child">
         <h3>子组件</h3>
 
-        <!-- <h4>a: {{ a }}</h4>
-        <h4>其他: {{ $attrs }}</h4> -->
+        <h4>玩具：{{ toy }}</h4>
+        <h4>父给的车：{{ car }}</h4>
 
-        <GrandChild v-bind="$attrs" />
+        <button @click="sendToy(toy)">把玩具给父亲</button>
     </div>
 </template>
 
@@ -14,14 +14,15 @@
     lang="ts"
     name="Child"
 >
-    import GrandChild from './GrandChild.vue'
+    import {ref} from 'vue'
 
-    // defineProps(['a'])
+    let toy = ref('奥特曼')
+
+    defineProps(['car', 'sendToy'])
 </script>
 
 <style scoped>
     .child {
-        margin-top: 20px;
         background-color: skyblue;
         padding: 10px;
         box-shadow: 0 0 10px black;
