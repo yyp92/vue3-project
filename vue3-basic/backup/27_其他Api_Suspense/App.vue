@@ -1,8 +1,16 @@
 <template>
     <div class="app">
         <h2>我是APP组件</h2>
-        <Hello />
-        <Child />
+
+        <Suspense>
+            <template v-slot:default>
+                <Child />
+            </template>
+
+            <template v-slot:fallback>
+                <h2>加载中....</h2>
+            </template>
+        </Suspense>
     </div>
 </template>
 
