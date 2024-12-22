@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <h2>login</h2>
+        <loginPanel />
     </div>
 </template>
 
@@ -9,15 +9,7 @@
     lang="ts"
     name="Login"
 >
-    import hyRequest from '@/service'
-
-    hyRequest
-        .get({
-            url: '/home/multidata'
-        })
-        .then((res) => {
-            console.log('res', res)
-        })
+    import loginPanel from './c-cpns/login-panel.vue';
 </script>
 
 <style
@@ -25,6 +17,12 @@
     lang="less"
 >
     .login {
-        color: red;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url('../../assets/img/login-bg.jpg') center center no-repeat;
+        background-size: 100% 100%;
     }
 </style>
