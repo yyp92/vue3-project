@@ -1,6 +1,8 @@
 <template>
     <div class="main">
-        <h2>main: {{ counterStore.counter }}</h2>
+        <h2>main</h2>
+
+        <button @click="handleExitClick">退出登录</button>
     </div>
 </template>
 
@@ -9,9 +11,16 @@
     lang="ts"
     name="Main"
 >
-    import useCountStore from '@/store/counter'
+    import { LOGIN_TOKEN } from '@/global/constants';
+    import { localCache } from '@/utils/cache';
+    import { useRouter } from 'vue-router';
 
-    const counterStore = useCountStore()
+    const router = useRouter()
+
+    function handleExitClick() {
+        localCache.removeCache(LOGIN_TOKEN)
+        router.push('/login')
+    }
 </script>
 
 <style

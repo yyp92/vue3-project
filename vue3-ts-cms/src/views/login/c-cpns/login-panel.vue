@@ -21,7 +21,7 @@
                         </div>
                     </template>
 
-                    <PanelAccount />
+                    <PanelAccount ref="accountRef" />
                 </el-tab-pane>
 
                 <el-tab-pane
@@ -68,16 +68,25 @@
     lang="ts"
     name="LoginPanel"
 >
-    import {ref} from 'vue'
+    import {ref, watch} from 'vue'
     import PanelAccount from './panel-account.vue'
     import PanelPhone from './panel-phone.vue'
+import { localCache } from '@/utils/cache';
 
     const activeName = ref('account')
-    const isRememberPassword = ref(false)
+    const isRememberPassword = ref<boolean>(localCache.getCache('isRememberPassword') ?? false) 
+    // InstanceType<typeof PanelAccount> -> 就是拿到 PanelAccount 这个实例的类型
+    const accountRef = ref<InstanceType<typeof PanelAccount>>()
+
+    
+    watch(isRememberPassword, (value) => {
+        localCache.setCache('isRememberPassword', value)
+    })
 
     function handleLoginAction() {
         if (activeName.value === 'account') {
-            console.log('用户进行账号登录')
+            accountRef.value?.loginAction(isRememberPassword.value)
+
             return
         }
 
