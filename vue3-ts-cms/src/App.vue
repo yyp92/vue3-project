@@ -7,7 +7,7 @@
 <script
     setup
     lang="ts"
-    name=""App
+    name="App"
 >
 
 </script>

@@ -16,9 +16,9 @@ const useLoginStore = defineStore(
     'login',
     {
         state: (): LoginState => ({
-            token: localCache.getCache(LOGIN_TOKEN) ?? '',
-            userInfo: localCache.getCache(USER_INFO) ?? {},
-            userMenus: localCache.getCache(USER_MENUS) ?? [],
+            token: '',
+            userInfo: {},
+            userMenus: [],
         }),
         actions: {
             async loginAccountAction(account: IAccount) {
@@ -54,6 +54,23 @@ const useLoginStore = defineStore(
 
                 // 页面跳转
                 router.push('/main')
+            },
+
+            // 用户进行刷新默认加载数据
+            loadLocalCacheAction() {
+                const token = localCache.getCache(LOGIN_TOKEN)
+                const userInfo = localCache.getCache(USER_INFO)
+                const userMenus = localCache.getCache(USER_MENUS)
+
+                if (token && userInfo && userMenus) {
+                    this.token = token
+                    this.userInfo = userInfo
+                    this.userMenus = userMenus
+
+                    // 动态的添加路由
+                    const routes = mapMenusToRoutes(userMenus)
+                    routes.forEach((route) => router.addRoute('main', route))
+                }
             }
         }
     }

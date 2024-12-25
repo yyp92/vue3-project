@@ -10,11 +10,9 @@
         </div>
 
         <div class="content">
-            <div class="breadcrumb">面包屑</div>
+            <HeaderCrumb />
 
-            <div class="info">
-                <HeaderInfo />
-            </div>
+            <HeaderInfo />
         </div>
     </div>
 </template>
@@ -25,7 +23,8 @@
     name="MainHeader"
 >
     import {ref} from 'vue'
-import HeaderInfo from './HeaderInfo.vue';
+    import HeaderInfo from './HeaderInfo.vue'
+    import HeaderCrumb from './HeaderCrumb.vue'
 
     const emit = defineEmits(['foldChange'])
 

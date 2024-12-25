@@ -32,7 +32,7 @@
                         src="https://upload.jianshu.io/users/upload_avatars/1102036/c3628b478f06.jpeg"
                     />
 
-                    <span class="name">coderwhy</span>
+                    <span class="name">{{ userInfo.name }}</span>
                 </span>
 
                 <template #dropdown>
@@ -73,13 +73,19 @@
     name="HeaderInfo"
 >
     import { useRouter } from 'vue-router';
-    import { LOGIN_TOKEN } from '@/global/constants';
+    import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '@/global/constants';
     import { localCache } from '@/utils/cache';
+    import useLoginStore from '@/store/login/login';
 
     const router = useRouter()
+    const userStore = useLoginStore()
+    const userInfo = userStore.userInfo
 
     function handleExitClick() {
         localCache.removeCache(LOGIN_TOKEN)
+        localCache.removeCache(USER_INFO)
+        localCache.removeCache(USER_MENUS)
+
         router.push('/login')
     }
 </script>

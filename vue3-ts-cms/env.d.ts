@@ -2,6 +2,6 @@
 
 declare module "*.vue" {
     import {DefineComponent} from 'vue'
-    const component: string
+    const component: DefineComponent
     export default component
 }
