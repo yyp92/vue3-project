@@ -1,6 +1,8 @@
 <template>
     <div class="user">
-        <h2>user</h2>
+        <UserSearch />
+
+        <UserContent />
     </div>
 </template>
 
@@ -9,11 +11,16 @@
     lang="ts"
     name="User"
 >
+    import UserSearch from '@/components/user-comp/UserSearch.vue'
+    import UserContent from '@/components/user-comp/UserContent.vue'
 </script>
 
 <style
     scoped
     lang="less"
 >
-    .user {}
+    .user {
+        border-radius: 10px;
+        overflow: hidden;
+    }
 </style>
