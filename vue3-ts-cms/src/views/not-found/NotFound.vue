@@ -1,7 +1,9 @@
 <template>
-    <div class="not-found">
-        <h2>您输入的地址不正确，请联系管理员</h2>
-    </div>
+    <el-result
+        icon="error"
+        title="404"
+        sub-title="你访问的页面不存在！"
+    ></el-result>
 </template>
 
 <script
@@ -14,8 +16,4 @@
 <style
     scoped
     lang="less"
->
-    .not-found {
-        color: purple;
-    }
-</style>
+></style>

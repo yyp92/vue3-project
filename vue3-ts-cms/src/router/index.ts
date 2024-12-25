@@ -15,7 +15,9 @@ const router = createRouter({
         },
         {
             path: '/main',
-            component: () => import('../views/main/Main.vue')
+            name: 'main',
+            component: () => import('../views/main/Main.vue'),
+
         },
         {
             path: '/:pathMatch(.*)',
@@ -24,7 +26,8 @@ const router = createRouter({
     ]
 })
 
-// 导航守卫
+
+// * 导航守卫
 router.beforeEach((to, from) => {
     // 只有登陆成功(token)，才能真正进入到 main 页面
     const token = localCache.getCache(LOGIN_TOKEN)

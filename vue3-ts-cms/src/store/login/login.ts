@@ -3,7 +3,8 @@ import { accountLoginRequest, getUserInfoById, getUserMenusByRoleId } from '@/se
 import type {IAccount} from '@/types'
 import {localCache} from '@/utils/cache'
 import router from '@/router'
-import { LOGIN_TOKEN } from '@/global/constants'
+import { LOGIN_TOKEN, USER_INFO, USER_MENUS } from '@/global/constants'
+import { mapMenusToRoutes } from '@/utils/map-menus'
 
 interface LoginState {
     token: string,
@@ -16,8 +17,8 @@ const useLoginStore = defineStore(
     {
         state: (): LoginState => ({
             token: localCache.getCache(LOGIN_TOKEN) ?? '',
-            userInfo: {},
-            userMenus: []
+            userInfo: localCache.getCache(USER_INFO) ?? {},
+            userMenus: localCache.getCache(USER_MENUS) ?? [],
         }),
         actions: {
             async loginAccountAction(account: IAccount) {
@@ -31,16 +32,25 @@ const useLoginStore = defineStore(
                 const id = newId
 
                 // 进行本地缓存
-                localCache.setCache(LOGIN_TOKEN, this.token)
+                localCache.setCache(LOGIN_TOKEN, token)
 
                 // 获取登录用户的详细信息
                 const userInfoResult = await getUserInfoById(id)
-                this.userInfo = userInfoResult.data
+                const userInfo = userInfoResult.data
+                this.userInfo = userInfo
 
                 // 根据角色请求用户的权限（菜单 menus）
                 const userMenusResult = await getUserMenusByRoleId(this.userInfo.role.id)
-                this.userMenus = userMenusResult.data
-                console.log(userMenusResult)
+                const userMenus = userMenusResult.data
+                this.userMenus = userMenus
+
+                // 进行本地缓存
+                localCache.setCache(USER_INFO, userInfo)
+                localCache.setCache(USER_MENUS, userMenus)
+
+                // 动态的添加路由
+                const routes = mapMenusToRoutes(userMenus)
+                routes.forEach((route) => router.addRoute('main', route))
 
                 // 页面跳转
                 router.push('/main')
