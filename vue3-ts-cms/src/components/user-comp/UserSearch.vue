@@ -110,17 +110,19 @@
         realname: '',
         cellphone: '',
         enable: 1,
-        createAt: []
+        createAt: ''
     })
     const formRef = ref<InstanceType<typeof ElForm>>()
-
+    const emit = defineEmits(['queryClick', 'resetClick']);
+    
 
     function handleReset() {
         formRef.value?.resetFields()
+        emit('resetClick')
     }
 
     function handleQuery() {
-        console.log('查询')
+        emit('queryClick', searchForm)
     }
 </script>
 

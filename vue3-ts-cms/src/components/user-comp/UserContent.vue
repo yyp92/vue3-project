@@ -92,19 +92,22 @@
                     width="130"
                     align="center"
                 >
-                    <el-button
-                        size="small"
-                        text
-                        type="primary"
-                        icon="Edit"
-                    >编辑</el-button>
+                    <template #default="scope">
+                        <el-button
+                            size="small"
+                            text
+                            type="primary"
+                            icon="Edit"
+                        >编辑</el-button>
 
-                    <el-button
-                        size="small"
-                        text
-                        type="danger"
-                        icon="Delete"
-                    >删除</el-button>
+                        <el-button
+                            size="small"
+                            text
+                            type="danger"
+                            icon="Delete"
+                            @click="handleDeleteBtnClick(scope.row.id)"
+                        >删除</el-button>
+                    </template>
                 </el-table-column>
             </el-table>
         </div>
@@ -151,16 +154,26 @@
         fetchUserListData()
     }
 
-    function fetchUserListData() {
+    function fetchUserListData(formData: any = {}) {
         const size = pageSize.value
         const offset = (currentPage.value - 1) * size
         const info = {
             size,
-            offset
+            offset,
+            ...formData
+            // name: 'c'
         }
 
         systemStore.postUsersListAction(info)
     }
+
+    function handleDeleteBtnClick(id: number) {
+        systemStore.deleteUserByIdAction(id)
+    }
+
+    defineExpose({
+        fetchUserListData
+    })
 </script>
 
 <style
