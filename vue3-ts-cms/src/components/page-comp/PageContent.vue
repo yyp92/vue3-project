@@ -1,12 +1,12 @@
 <template>
     <div class="content">
         <div class="header">
-            <div class="title">部门列表</div>
+            <div class="title">{{ contentConfig?.header?.title ?? '数据列表' }}</div>
 
             <el-button
                 type="primary"
                 @click="handleNewUserClick"
-            >新建部门</el-button>
+            >{{ contentConfig?.header?.btnTitle ?? '新建数据' }}</el-button>
         </div>
 
         <div class="table">
@@ -15,84 +15,68 @@
                 style="width: 100%"
                 border
             >
-                <el-table-column
-                    type="selection"
-                    width="50"
-                    align="center"
-                />
-
-                <el-table-column
-                    type="index"
-                    label="序号"
-                    width="60"
-                    align="center"
-                />
-
-                <el-table-column 
-                    prop="name"
-                    label="部门名称"
-                    width="120"
-                    align="center"
-                />
-
-
-                <el-table-column
-                    prop="leader"
-                    label="部门领导"
-                    width="120"
-                    align="center"
-                />
-
-                <el-table-column
-                    prop="parentId"
-                    label="上级部门"
-                    width="120"
-                    align="center"
-                />
-
-                <el-table-column
-                    prop="createAt"
-                    label="创建时间"
-                    align="center"
+                <template
+                    v-for="item in contentConfig.propsList"
+                    :key="item.prop"
                 >
-                    <template #default="scope">
-                        {{ formatUTC(scope.row.createAt) }}
+                    <template v-if="item.type === 'timer'">
+                        <el-table-column
+                            align="center"
+                            v-bind="item"
+                        >
+                            <template #default="scope">
+                                {{ formatUTC(scope.row[item.prop]) }}
+                            </template>
+                        </el-table-column>
                     </template>
-                </el-table-column>
 
-                <el-table-column
-                    prop="updateAt"
-                    label="更新时间"
-                    align="center"
-                >
-                    <template #default="scope">
-                        {{ formatUTC(scope.row.updateAt) }}
+                    <template v-else-if="item.type === 'handle'">
+                        <el-table-column
+                            align="center"
+                            v-bind="item"
+                        >
+                            <template #default="scope">
+                                <el-button
+                                    size="small"
+                                    text
+                                    type="primary"
+                                    icon="Edit"
+                                    @click="handleEditBtnClick(scope.row)"
+                                >编辑</el-button>
+
+                                <el-button
+                                    size="small"
+                                    text
+                                    type="danger"
+                                    icon="Delete"
+                                    @click="handleDeleteBtnClick(scope.row.id)"
+                                >删除</el-button>
+                            </template>
+                        </el-table-column>
                     </template>
-                </el-table-column>
 
-                <el-table-column
-                    label="操作"
-                    width="130"
-                    align="center"
-                >
-                    <template #default="scope">
-                        <el-button
-                            size="small"
-                            text
-                            type="primary"
-                            icon="Edit"
-                            @click="handleEditBtnClick(scope.row)"
-                        >编辑</el-button>
-
-                        <el-button
-                            size="small"
-                            text
-                            type="danger"
-                            icon="Delete"
-                            @click="handleDeleteBtnClick(scope.row.id)"
-                        >删除</el-button>
+                    <template v-else-if="item.type === 'custom'">
+                        <el-table-column
+                            align="center"
+                            v-bind="item"
+                        >
+                            <template #default="scope">
+                                <slot
+                                    :name="item.slotName"
+                                    v-bind="scope"
+                                    :prop="item.prop"
+                                ></slot>
+                            </template>
+                        </el-table-column>
                     </template>
-                </el-table-column>
+
+                    <template v-else>
+                        <el-table-column
+                            align="center"
+                            v-bind="item"
+                        />
+                    </template>
+                </template>
             </el-table>
         </div>
 
@@ -120,6 +104,18 @@
     import { ref } from 'vue'
     import useSystemStore from '@/store/main/system/system'
     import {formatUTC} from '@/utils/format'
+
+    interface IProps {
+        contentConfig: {
+            header?: {
+                title?: string
+                btnTitle?: string
+            },
+            propsList: any[]
+        }
+    }
+
+    const props = defineProps<IProps>()
 
     const emit = defineEmits(['newClick', 'editClick'])
 
