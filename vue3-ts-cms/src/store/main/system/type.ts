@@ -13,4 +13,7 @@ export interface UserProps {
 export interface SystemState {
     usersList: UserProps[],
     usersTotalCount: number
+
+    pageList: any[]
+    pageTotalCount: number
 }

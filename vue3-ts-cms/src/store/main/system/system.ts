@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import { addUserData, deleteUserById, editUserData, postUsersListData } from '@/service/main/system/system'
+import { addUserData, deletePageById, deleteUserById, editUserData, postPageListData, postUsersListData } from '@/service/main/system/system'
 import type { SystemState } from './type'
 import {ElMessage} from 'element-plus'
 
@@ -9,7 +9,9 @@ const userSystemStore = defineStore(
     {
         state: (): SystemState => ({
             usersList: [],
-            usersTotalCount: 0
+            usersTotalCount: 0,
+            pageList: [],
+            pageTotalCount: 0
         }),
         actions: {
             async postUsersListAction(queryInfo: any) {
@@ -69,6 +71,40 @@ const userSystemStore = defineStore(
                 else {
                     ElMessage({
                         message: '编辑失败',
+                        type: 'error',
+                    })
+                }
+            },
+
+            // 针对页面的数据
+            async postPageListAction(pageName: string, queryInfo: any) {
+                const pageListResult = await postPageListData(pageName, queryInfo)
+                const {totalCount, list} = pageListResult.data
+
+                this.pageTotalCount = totalCount
+                this.pageList = list
+            },
+            async deletePageByIdAction(pageName: string, id: number) {
+                const deleteResult = await deletePageById(pageName, id)
+                const {code} = deleteResult
+
+                if (code === 0) {
+                    ElMessage({
+                        message: '删除成功',
+                        type: 'success',
+                    })
+    
+                    this.postPageListAction(
+                        pageName,
+                        {
+                            offset: 0,
+                            size: 10
+                        }
+                    )
+                }
+                else {
+                    ElMessage({
+                        message: '删除失败',
                         type: 'error',
                     })
                 }

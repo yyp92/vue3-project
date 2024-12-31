@@ -26,3 +26,17 @@ export function editUserData(id: number, userInfo: any) {
         data: userInfo
     })
 }
+
+
+export function postPageListData(pageName: string, queryInfo: any) {
+    return hyRequest.post({
+        url: `/${pageName}/list`,
+        data: queryInfo
+    })
+}
+
+export function deletePageById(pageName: string, id: number) {
+    return hyRequest.delete({
+        url: `/${pageName}/${id}`,
+    })
+}
