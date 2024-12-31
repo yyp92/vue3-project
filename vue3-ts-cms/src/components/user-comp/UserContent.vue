@@ -5,6 +5,7 @@
 
             <el-button
                 type="primary"
+                @click="handleNewUserClick"
             >新建用户</el-button>
         </div>
 
@@ -137,6 +138,8 @@
     import useSystemStore from '@/store/main/system/system'
     import {formatUTC} from '@/utils/format'
 
+    const emit = defineEmits(['newClick'])
+
     const systemStore = useSystemStore()
 
     const {usersList, usersTotalCount} = storeToRefs(systemStore)
@@ -169,6 +172,10 @@
 
     function handleDeleteBtnClick(id: number) {
         systemStore.deleteUserByIdAction(id)
+    }
+
+    function handleNewUserClick() {
+        emit('newClick')
     }
 
     defineExpose({

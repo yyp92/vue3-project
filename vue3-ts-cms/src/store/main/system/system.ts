@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import { deleteUserById, postUsersListData } from '@/service/main/system/system'
+import { addUserData, deleteUserById, postUsersListData } from '@/service/main/system/system'
 import type { SystemState } from './type'
 import {ElMessage} from 'element-plus'
 
@@ -30,6 +30,27 @@ const userSystemStore = defineStore(
                     offset: 0,
                     size: 10
                 })
+            },
+            async addUserDataActions(userInfo: any) {
+                const newResult = await addUserData(userInfo)
+
+                if (newResult.code === 0) {
+                    ElMessage({
+                        message: '创建成功',
+                        type: 'success',
+                    })
+
+                    this.postUsersListAction({
+                        offset: 0,
+                        size: 10
+                    })
+                }
+                else {
+                    ElMessage({
+                        message: '创建失败',
+                        type: 'error',
+                    })
+                }
             }
         }
     }

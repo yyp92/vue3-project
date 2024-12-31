@@ -5,7 +5,14 @@
             @reset-click="handleResetClick"
         />
 
-        <UserContent ref="contentRef" />
+        <UserContent
+            ref="contentRef"
+            @new-click="handleNewBtnClick"
+        />
+
+        <UserModal
+            ref="modalRef"
+        />
     </div>
 </template>
 
@@ -17,6 +24,7 @@
     import {ref} from 'vue'
     import UserSearch from '@/components/user-comp/UserSearch.vue'
     import UserContent from '@/components/user-comp/UserContent.vue'
+    import UserModal from '@/components/user-comp/UserModal.vue'
 
     const contentRef = ref<InstanceType<typeof UserContent>>()
 
@@ -27,6 +35,11 @@
 
     function handleResetClick() {
         contentRef.value?.fetchUserListData()
+    }
+
+    const modalRef = ref<InstanceType<typeof UserModal>>()
+    function handleNewBtnClick() {
+        modalRef.value?.setModalVisible()
     }
 </script>
 
