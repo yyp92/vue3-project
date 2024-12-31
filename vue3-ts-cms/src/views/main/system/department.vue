@@ -1,6 +1,7 @@
 <template>
     <div class="department">
         <PageSearch
+            :search-config="searchConfig"
             @query-click="handleQueryClick"
             @reset-click="handleResetClick"
         />
@@ -18,8 +19,8 @@
 >
     import {ref} from 'vue'
     import PageSearch from '@/components/page-comp/PageSearch.vue'
-    import PageContent from '@/components/page-comp/PageContent.vue'
-    import PageModal from '@/components/page-comp/PageModal.vue'
+    import PageContent from '@/components/page-comp1/PageContent.vue'
+    import searchConfig from './config/department-search.config'
 
     const contentRef = ref<InstanceType<typeof PageContent>>()
 

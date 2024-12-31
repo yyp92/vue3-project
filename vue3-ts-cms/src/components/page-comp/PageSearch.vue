@@ -1,50 +1,57 @@
 <template>
     <div class="search">
         <el-form
-            label-width="80px"
+            :label-width="searchConfig.labelWidth ?? '80px'"
             size="large"
             :model="searchForm"
             ref="formRef"
         >
             <el-row :gutter="20">
-                <el-col :span="8">
-                    <el-form-item
-                        label="部门名称"
-                        prop="name"
-                    >
-                        <el-input
-                            placeholder="请输入部门名称"
-                            v-model="searchForm.name"
-                        />
-                    </el-form-item>
-                </el-col>
+                <template
+                    v-for="item in searchConfig.formItems"
+                    :key="item.prop"
+                >
+                    <el-col :span="8">
+                        <el-form-item
+                            :label="item.label"
+                            :prop="item.prop"
+                        >
+                            <template v-if="item.type === 'input'">
+                                <el-input
+                                    v-model="searchForm[item.prop]"
+                                    :placeholder="item.placeholder"
+                                />
+                            </template>
 
-                <el-col :span="8">
-                    <el-form-item
-                        label="部门领导"
-                        prop="leader"
-                    >
-                        <el-input
-                            placeholder="请输入部门领导"
-                            v-model="searchForm.leader"
-                        />
-                    </el-form-item>
-                </el-col>
+                            <template v-if="item.type === 'date-picker'">
+                                <el-date-picker
+                                    type="daterange"
+                                    range-separator="-"
+                                    start-placeholder="开始时间"
+                                    end-placeholder="结束时间"
+                                    v-model="searchForm[item.prop]"
+                                />
+                            </template>
 
-                <el-col :span="8">
-                    <el-form-item
-                        label="创建时间"
-                        prop="createAt"
-                    >
-                        <el-date-picker
-                            type="daterange"
-                            range-separator="-"
-                            start-placeholder="开始时间"
-                            end-placeholder="结束时间"
-                            v-model="searchForm.createAt"
-                        />
-                    </el-form-item>
-                </el-col>
+                            <template v-if="item.type === 'select'">
+                                <el-select
+                                    v-model="searchForm[item.prop]"
+                                    :placeholder="item.placeholder"
+                                >
+                                    <template
+                                        v-for="option in item.options"
+                                        :key="option.value"
+                                    >
+                                        <el-option
+                                            :label="option.label"
+                                            :value="option.value"
+                                        />
+                                    </template>
+                                </el-select>
+                            </template>
+                        </el-form-item>
+                    </el-col>
+                </template>
             </el-row>
         </el-form>
 
@@ -71,13 +78,24 @@
     import type { ElForm } from 'element-plus'
     import {reactive, ref} from 'vue'
 
-    const searchForm = reactive({
-        name: '',
-        leader: '',
-        createAt: ''
-    })
-    const formRef = ref<InstanceType<typeof ElForm>>()
+    interface Iprops {
+        searchConfig: {
+            formItems: any[],
+            labelWidth?: string
+        },
+    }
+
     const emit = defineEmits(['queryClick', 'resetClick']);
+    const props = defineProps<Iprops>()
+
+    // 定义 form 的数据
+    const initiaForm: any = {}
+    for (const item of props.searchConfig.formItems) {
+        initiaForm[item.prop] = item?.initialValue ?? ''
+    }
+
+    const searchForm = reactive(initiaForm)
+    const formRef = ref<InstanceType<typeof ElForm>>()
     
 
     function handleReset() {

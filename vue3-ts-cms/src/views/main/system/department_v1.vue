@@ -1,7 +1,6 @@
 <template>
-    <div class="role">
+    <div class="department">
         <PageSearch
-            :search-config="searchConfig"
             @query-click="handleQueryClick"
             @reset-click="handleResetClick"
         />
@@ -15,12 +14,11 @@
 <script
     setup
     lang="ts"
-    name="Role"
+    name="Department"
 >
     import {ref} from 'vue'
-    import PageSearch from '@/components/page-comp/PageSearch.vue'
+    import PageSearch from '@/components/page-comp1/PageSearch.vue'
     import PageContent from '@/components/page-comp1/PageContent.vue'
-    import searchConfig from './config/role-search.config'
 
     const contentRef = ref<InstanceType<typeof PageContent>>()
 
