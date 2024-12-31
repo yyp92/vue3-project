@@ -99,6 +99,7 @@
                             text
                             type="primary"
                             icon="Edit"
+                            @click="handleEditBtnClick(scope.row)"
                         >编辑</el-button>
 
                         <el-button
@@ -138,7 +139,7 @@
     import useSystemStore from '@/store/main/system/system'
     import {formatUTC} from '@/utils/format'
 
-    const emit = defineEmits(['newClick'])
+    const emit = defineEmits(['newClick', 'editClick'])
 
     const systemStore = useSystemStore()
 
@@ -176,6 +177,10 @@
 
     function handleNewUserClick() {
         emit('newClick')
+    }
+
+    function handleEditBtnClick(data: any) {
+        emit('editClick', data)
     }
 
     defineExpose({

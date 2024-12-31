@@ -2,7 +2,7 @@
     <div class="user-modal">
         <el-dialog
             v-model="dialogVisble"
-            title="新建用户"
+            :title="isNewRef ? '新建用户' : '编辑用户'"
             width="400"
         >
             <div class="form">
@@ -34,6 +34,7 @@
                     <el-form-item
                         label="密码"
                         prop="password"
+                        v-if="isNewRef"
                     >
                         <el-input
                             v-model="formData.password"
@@ -125,7 +126,9 @@
     const {entireRoles, entireDepartments} = storeToRefs(mainStore)
 
     const dialogVisble = ref(false)
-    const formData = reactive({
+    const isNewRef = ref(true)
+    const editData = ref()
+    const formData = reactive<any>({
         name: '',
         realname: '',
         password: '',
@@ -134,14 +137,37 @@
         departmentId: ''
     })
 
-    function setModalVisible() {
+    function setModalVisible(isNew: boolean = true, data?: any) {
         dialogVisble.value = true
+        isNewRef.value = isNew
+
+        // 编辑
+        if (!isNew && data) {
+            editData.value = data
+
+            for (const key in formData) {
+                formData[key] = data[key]
+            }
+        }
+        // 新建
+        else {
+            editData.value = null
+
+            for (const key in formData) {
+                formData[key] = ''
+            }
+        }
     }
 
     function handleConfirmClick() {
         dialogVisble.value = false
 
-        systemStore.addUserDataActions(formData)
+        if (isNewRef.value) {
+            systemStore.addUserDataActions(formData)
+        }
+        else {
+            systemStore.editUserDataActions(editData.value?.id, formData)
+        }
     }
 
     defineExpose({

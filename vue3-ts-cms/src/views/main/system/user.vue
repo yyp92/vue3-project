@@ -7,7 +7,8 @@
 
         <UserContent
             ref="contentRef"
-            @new-click="handleNewBtnClick"
+            @new-click="handleNewClick"
+            @edit-click="handleEditClick"
         />
 
         <UserModal
@@ -27,6 +28,7 @@
     import UserModal from '@/components/user-comp/UserModal.vue'
 
     const contentRef = ref<InstanceType<typeof UserContent>>()
+        const modalRef = ref<InstanceType<typeof UserModal>>()
 
 
     function handleQueryClick(formData: any) {
@@ -37,9 +39,13 @@
         contentRef.value?.fetchUserListData()
     }
 
-    const modalRef = ref<InstanceType<typeof UserModal>>()
-    function handleNewBtnClick() {
+    
+    function handleNewClick() {
         modalRef.value?.setModalVisible()
+    }
+
+    function handleEditClick(data: any) {
+        modalRef.value?.setModalVisible(false, data)
     }
 </script>
 
