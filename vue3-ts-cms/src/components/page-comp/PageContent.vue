@@ -104,19 +104,9 @@
     import { ref } from 'vue'
     import useSystemStore from '@/store/main/system/system'
     import {formatUTC} from '@/utils/format'
+    import type { IContentProps } from './type';
 
-    interface IProps {
-        contentConfig: {
-            pageName: string,
-            header?: {
-                title?: string
-                btnTitle?: string
-            },
-            propsList: any[]
-        }
-    }
-
-    const props = defineProps<IProps>()
+    const props = defineProps<IContentProps>()
 
     const emit = defineEmits(['newClick', 'editClick'])
 

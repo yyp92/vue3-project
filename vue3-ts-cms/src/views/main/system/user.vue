@@ -28,7 +28,7 @@
     import UserModal from '@/components/user-comp/UserModal.vue'
 
     const contentRef = ref<InstanceType<typeof UserContent>>()
-        const modalRef = ref<InstanceType<typeof UserModal>>()
+    const modalRef = ref<InstanceType<typeof UserModal>>()
 
 
     function handleQueryClick(formData: any) {

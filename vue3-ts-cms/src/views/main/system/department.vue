@@ -36,9 +36,8 @@
     import contentConfig from './config/department-content.config'
     import modalConfig from './config/department-modal.config'
     import useMainStore from '@/store/main/main'
-
-    const contentRef = ref<InstanceType<typeof PageContent>>()
-    const modalRef = ref<InstanceType<typeof PageModal>>()
+    import usePageContent from '@/hooks/usePageContent'
+    import usePageModal from '@/hooks/usePageModal'
 
     // 对 modalConfig 进行操作
     const modalConfigRef = computed(() => {
@@ -59,21 +58,17 @@
         return modalConfig
     })
 
-    function handleQueryClick(queryInfo: any) {
-        contentRef.value?.fetchPageListData(queryInfo)
-    }
+    const {
+        contentRef,
+        handleQueryClick,
+        handleResetClick
+    } = usePageContent()
 
-    function handleResetClick() {
-        contentRef.value?.fetchPageListData()
-    }
-
-    function handleNewClick() {
-        modalRef.value?.setModalVisible()
-    }
-
-    function handleEditClick(data: any) {
-        modalRef.value?.setModalVisible(false, data)
-    }
+    const {
+        modalRef,
+        handleNewClick,
+        handleEditClick
+    } = usePageModal()
 </script>
 
 <style
