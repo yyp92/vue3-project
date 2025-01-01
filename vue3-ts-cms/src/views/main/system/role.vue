@@ -16,7 +16,16 @@
         <PageModal
             ref="modalRef"
             :modal-config="modalConfig"
-        />
+        >
+            <template #menuList>
+                <el-tree
+                    :data="entireMenu"
+                    show-checkbox
+                    node-key="id"
+                    :props="{children: 'children', label: 'name'}"
+                />
+            </template>
+        </PageModal>
     </div>
 </template>
 
@@ -33,6 +42,11 @@
     import usePageModal from '@/hooks/usePageModal'
     import contentConfig from './config/role-content.config'
     import modalConfig from './config/role-modal.config'
+    import useMainStore from '@/store/main/main'
+    import { storeToRefs } from 'pinia'
+
+    const mainStore = useMainStore()
+    const {entireMenu} = storeToRefs(mainStore)
 
     const {
         contentRef,

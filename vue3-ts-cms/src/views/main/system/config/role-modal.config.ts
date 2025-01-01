@@ -17,6 +17,11 @@ const modalConfig = {
             prop: 'intro',
             placeholder: '请输入权限介绍'
         },
+        {
+            type: 'custom',
+            // label: '选择权限',
+            slotName: 'menuList',
+        }
     ]
 }
 

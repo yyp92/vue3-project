@@ -52,6 +52,10 @@
                                     </template>
                                 </el-select>
                             </template>
+
+                            <template v-if="item.type === 'custom'">
+                                <slot :name="item.slotName"></slot>
+                            </template>
                         </el-form-item>
                     </template>
                 </el-form>

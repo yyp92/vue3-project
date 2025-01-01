@@ -11,3 +11,9 @@ export function getEntireDepartments() {
         url: '/department/list'
     })
 }
+
+export function getEntireMenu() {
+    return hyRequest.post({
+        url: '/menu/list'
+    })
+}

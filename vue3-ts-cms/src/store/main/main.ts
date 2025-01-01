@@ -1,9 +1,10 @@
-import { getEntireDepartments, getEntireRoles } from '@/service/main/main'
+import { getEntireDepartments, getEntireMenu, getEntireRoles } from '@/service/main/main'
 import {defineStore} from 'pinia' 
 
 interface IMainState {
     entireRoles: any[]
-    entireDepartments: any[]
+    entireDepartments: any[],
+    entireMenu: any[]
 }
 
 const useMainStore = defineStore(
@@ -11,16 +12,19 @@ const useMainStore = defineStore(
     {
         state: (): IMainState => ({
             entireRoles: [],
-            entireDepartments: []
+            entireDepartments: [],
+            entireMenu: []
         }),
 
         actions: {
             async fetchEntireDataAction() {
                 const rolesResult = await getEntireRoles()
                 const departmentsResult = await getEntireDepartments()
+                const menuResult = await getEntireMenu()
 
                 this.entireRoles = rolesResult.data.list
                 this.entireDepartments = departmentsResult.data.list
+                this.entireMenu = menuResult.data.list
             }
         }
     }
