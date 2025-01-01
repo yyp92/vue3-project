@@ -115,7 +115,7 @@
 
             for (const key in formData) {
                 const item = props.modalConfig.formItems.find(item => item.prop === key) as any
-                
+
                 formData[key] = item ? item?.initialValue : ''
             }
         }
@@ -125,10 +125,10 @@
         dialogVisble.value = false
 
         if (isNewRef.value) {
-            systemStore.addUserDataActions(formData)
+            systemStore.addPageDataActions(props.modalConfig.pageName,formData)
         }
         else {
-            systemStore.editUserDataActions(editData.value?.id, formData)
+            systemStore.editPageDataActions(props.modalConfig.pageName,editData.value?.id, formData)
         }
     }
 

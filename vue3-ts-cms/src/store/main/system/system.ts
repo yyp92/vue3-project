@@ -1,5 +1,5 @@
 import {defineStore} from 'pinia'
-import { addUserData, deletePageById, deleteUserById, editUserData, postPageListData, postUsersListData } from '@/service/main/system/system'
+import { addPageData, addUserData, deletePageById, deleteUserById, editPageData, editUserData, postPageListData, postUsersListData } from '@/service/main/system/system'
 import type { SystemState } from './type'
 import {ElMessage} from 'element-plus'
 
@@ -108,7 +108,55 @@ const userSystemStore = defineStore(
                         type: 'error',
                     })
                 }
-            }
+            },
+            async addPageDataActions(pageName: string, data: any) {
+                const newResult = await addPageData(pageName, data)
+
+                if (newResult.code === 0) {
+                    ElMessage({
+                        message: '创建成功',
+                        type: 'success',
+                    })
+
+                    this.postPageListAction(
+                        pageName,
+                        {
+                            offset: 0,
+                            size: 10
+                        }
+                    )
+                }
+                else {
+                    ElMessage({
+                        message: '创建失败',
+                        type: 'error',
+                    })
+                }
+            },
+            async editPageDataActions(pageName: string, id: number, userInfo: any) {
+                const editResult = await editPageData(pageName, id, userInfo)
+
+                if (editResult.code === 0) {
+                    ElMessage({
+                        message: '编辑成功',
+                        type: 'success',
+                    })
+
+                    this.postPageListAction(
+                        pageName,
+                        {
+                            offset: 0,
+                            size: 10
+                        }
+                    )
+                }
+                else {
+                    ElMessage({
+                        message: '编辑失败',
+                        type: 'error',
+                    })
+                }
+            },
         }
     }
 )
