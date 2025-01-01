@@ -107,6 +107,7 @@
 
     interface IProps {
         contentConfig: {
+            pageName: string,
             header?: {
                 title?: string
                 btnTitle?: string
@@ -145,11 +146,11 @@
             ...formData
         }
 
-        systemStore.postPageListAction('department', info)
+        systemStore.postPageListAction(props.contentConfig.pageName, info)
     }
 
     function handleDeleteBtnClick(id: number) {
-        systemStore.deletePageByIdAction('department', id)
+        systemStore.deletePageByIdAction(props.contentConfig.pageName, id)
     }
 
     function handleNewUserClick() {
