@@ -14,6 +14,7 @@
                 :data="pageList"
                 style="width: 100%"
                 border
+                v-bind="contentConfig.childrenTree"
             >
                 <template
                     v-for="item in contentConfig.propsList"

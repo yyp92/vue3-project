@@ -8,6 +8,14 @@
 
         <PageContent
             ref="contentRef"
+            :content-config="contentConfig"
+            @new-click="handleNewClick"
+            @edit-click="handleEditClick"
+        />
+
+        <PageModal
+            ref="modalRef"
+            :modal-config="modalConfig"
         />
     </div>
 </template>
@@ -17,20 +25,26 @@
     lang="ts"
     name="Role"
 >
-    import {ref} from 'vue'
     import PageSearch from '@/components/page-comp/PageSearch.vue'
-    import PageContent from '@/components/page-comp1/PageContent.vue'
+    import PageContent from '@/components/page-comp/PageContent.vue'
+    import PageModal from '@/components/page-comp/PageModal.vue'
     import searchConfig from './config/role-search.config'
+    import usePageContent from '@/hooks/usePageContent'
+    import usePageModal from '@/hooks/usePageModal'
+    import contentConfig from './config/role-content.config'
+    import modalConfig from './config/role-modal.config'
 
-    const contentRef = ref<InstanceType<typeof PageContent>>()
+    const {
+        contentRef,
+        handleQueryClick,
+        handleResetClick
+    } = usePageContent()
 
-    function handleQueryClick(queryInfo: any) {
-        contentRef.value?.fetchPageListData(queryInfo)
-    }
-
-    function handleResetClick() {
-        contentRef.value?.fetchPageListData()
-    }
+    const {
+        modalRef,
+        handleNewClick,
+        handleEditClick
+    } = usePageModal()
 </script>
 
 <style

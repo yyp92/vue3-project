@@ -3,7 +3,7 @@
         <el-dialog
             v-model="dialogVisble"
             :title="isNewRef ? modalConfig.header.newTitle : modalConfig.header.editTitle"
-            width="400"
+            width="500"
         >
             <div class="form">
                 <el-form
