@@ -4,6 +4,7 @@
             <div class="title">{{ contentConfig?.header?.title ?? '数据列表' }}</div>
 
             <el-button
+                v-if="isCreate"
                 type="primary"
                 @click="handleNewUserClick"
             >{{ contentConfig?.header?.btnTitle ?? '新建数据' }}</el-button>
@@ -38,6 +39,7 @@
                         >
                             <template #default="scope">
                                 <el-button
+                                    v-if="isUpdate"
                                     size="small"
                                     text
                                     type="primary"
@@ -46,6 +48,7 @@
                                 >编辑</el-button>
 
                                 <el-button
+                                    v-if="isDelete"
                                     size="small"
                                     text
                                     type="danger"
@@ -106,13 +109,18 @@
     import useSystemStore from '@/store/main/system/system'
     import {formatUTC} from '@/utils/format'
     import type { IContentProps } from './type';
+    import usePermissions from '@/hooks/usePermissions'
 
     const props = defineProps<IContentProps>()
-
     const emit = defineEmits(['newClick', 'editClick'])
 
-    const systemStore = useSystemStore()
+    // 权限
+    const isCreate = usePermissions(`${props.contentConfig.pageName}:create`)
+    const isDelete = usePermissions(`${props.contentConfig.pageName}:delete`)
+    const isUpdate = usePermissions(`${props.contentConfig.pageName}:update`)
+    const isQuery = usePermissions(`${props.contentConfig.pageName}:query`)
 
+    const systemStore = useSystemStore()
     const {pageList, pageTotalCount} = storeToRefs(systemStore)
     const currentPage = ref(1)
     const pageSize = ref(10)
@@ -129,6 +137,10 @@
     }
 
     function fetchPageListData(formData: any = {}) {
+        if (!isQuery) {
+            return
+        }
+
         const size = pageSize.value
         const offset = (currentPage.value - 1) * size
         const info = {
