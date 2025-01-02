@@ -128,11 +128,23 @@
     function handleConfirmClick() {
         dialogVisble.value = false
 
+        let infoData = {...formData}
+        if (props?.otherInfo) {
+            infoData = {
+                ...infoData,
+                ...props.otherInfo
+            }
+        }
+
         if (isNewRef.value) {
-            systemStore.addPageDataActions(props.modalConfig.pageName,formData)
+            systemStore.addPageDataActions(props.modalConfig.pageName, infoData)
         }
         else {
-            systemStore.editPageDataActions(props.modalConfig.pageName,editData.value?.id, formData)
+            systemStore.editPageDataActions(
+                props.modalConfig.pageName,
+                editData.value?.id,
+                infoData
+            )
         }
     }
 
