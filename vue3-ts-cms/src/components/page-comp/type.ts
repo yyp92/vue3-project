@@ -1,3 +1,14 @@
+export interface ISearchConfig{
+    pageName: string,
+    formItems: any[],
+    labelWidth?: string
+}
+
+export interface ISearchProps {
+    searchConfig: ISearchConfig
+}
+
+
 export interface IModalConfig{
     pageName: string,
     header: {

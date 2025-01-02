@@ -65,7 +65,10 @@
         modalRef,
         handleNewClick,
         handleEditClick
-    } = usePageModal(editCallback)
+    } = usePageModal(
+        newCallback,
+        editCallback
+    )
 
 
     const otherInfo = ref({})
@@ -76,6 +79,12 @@
         ]
 
         otherInfo.value = {menuList}
+    }
+
+    function newCallback() {
+        nextTick(() => {
+            treeRef.value?.setCheckedKeys([])
+        })
     }
 
     function editCallback(itemData: any) {

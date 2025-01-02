@@ -2,6 +2,7 @@ import {defineStore} from 'pinia'
 import { addPageData, addUserData, deletePageById, deleteUserById, editPageData, editUserData, postPageListData, postUsersListData } from '@/service/main/system/system'
 import type { SystemState } from './type'
 import {ElMessage} from 'element-plus'
+import useMainStore from '../main'
 
 
 const userSystemStore = defineStore(
@@ -101,6 +102,9 @@ const userSystemStore = defineStore(
                             size: 10
                         }
                     )
+                    // 获取完整数据
+                    const mainStore = useMainStore()
+                    mainStore.fetchEntireDataAction()
                 }
                 else {
                     ElMessage({
@@ -125,6 +129,10 @@ const userSystemStore = defineStore(
                             size: 10
                         }
                     )
+
+                    // 获取完整数据
+                    const mainStore = useMainStore()
+                    mainStore.fetchEntireDataAction()
                 }
                 else {
                     ElMessage({
@@ -149,6 +157,9 @@ const userSystemStore = defineStore(
                             size: 10
                         }
                     )
+                    // 获取完整数据
+                    const mainStore = useMainStore()
+                    mainStore.fetchEntireDataAction()
                 }
                 else {
                     ElMessage({

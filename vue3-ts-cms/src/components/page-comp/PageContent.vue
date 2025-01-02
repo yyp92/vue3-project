@@ -125,6 +125,17 @@
     const currentPage = ref(1)
     const pageSize = ref(10)
 
+    const actinList = ['deletePageByIdAction', 'editPageDataAction', 'addPageDataAction']
+    // 等到接口成功以后重置分页组件
+    systemStore.$onAction(({name, after}) => {
+        after(() => {
+            if (actinList.includes(name)) {
+                currentPage.value = 1
+                pageSize.value = 10
+            }
+        })
+    })
+
     fetchPageListData()
 
 

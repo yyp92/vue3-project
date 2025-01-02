@@ -1,6 +1,7 @@
 <template>
     <div class="search">
         <el-form
+            v-if="isQuery"
             :label-width="searchConfig.labelWidth ?? '80px'"
             size="large"
             :model="searchForm"
@@ -77,16 +78,13 @@
 >
     import type { ElForm } from 'element-plus'
     import {reactive, ref} from 'vue'
-
-    interface Iprops {
-        searchConfig: {
-            formItems: any[],
-            labelWidth?: string
-        },
-    }
+    import type { ISearchProps } from './type';
+    import usePermissions from '@/hooks/usePermissions';
 
     const emit = defineEmits(['queryClick', 'resetClick']);
-    const props = defineProps<Iprops>()
+    const props = defineProps<ISearchProps>()
+
+    const isQuery = usePermissions(`${props.searchConfig.pageName}:query`)
 
     // 定义 form 的数据
     const initiaForm: any = {}
