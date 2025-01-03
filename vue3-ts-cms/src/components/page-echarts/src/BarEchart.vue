@@ -32,7 +32,8 @@
                 data: props.labels,
                 axisLabel: {
                     inside: true,
-                    color: '#fff'
+                    color: '#fff',
+                    interval: 0
                 },
                 z: 10
             },

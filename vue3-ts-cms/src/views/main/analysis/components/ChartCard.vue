@@ -1,7 +1,7 @@
 <template>
     <div class="chart-card">
         <el-card>
-            <template #header>Yummy hamburger</template>
+            <template #header>统计图</template>
             
             <slot></slot>
         </el-card>

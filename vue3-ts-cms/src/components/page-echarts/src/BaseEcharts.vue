@@ -15,6 +15,9 @@
     import {ref, onMounted, watchEffect} from 'vue'
     import * as echarts from 'echarts'
     import type {EChartsOption} from 'echarts'
+    import ChinaJSON from '../data/china.json'
+
+    echarts.registerMap('china', ChinaJSON as any)
 
     interface Iprops {
         option: EChartsOption
@@ -33,6 +36,11 @@
         )
 
         watchEffect(() => echartInstance.setOption(props.option))
+
+        // 监听 window 缩放
+        window.addEventListener('resize', () => {
+            echartInstance.resize()
+        })
     })
 </script>
 

@@ -52,6 +52,7 @@ declare module 'vue' {
     LineEchart: typeof import('./src/components/page-echarts/src/LineEchart.vue')['default']
     MainHeader: typeof import('./src/components/main-header/MainHeader.vue')['default']
     MainMenu: typeof import('./src/components/main-menu/MainMenu.vue')['default']
+    MapEchart: typeof import('./src/components/page-echarts/src/MapEchart.vue')['default']
     PageContent: typeof import('./src/components/page-comp/PageContent.vue')['default']
     PageModal: typeof import('./src/components/page-comp/PageModal.vue')['default']
     PageSearch: typeof import('./src/components/page-comp/PageSearch.vue')['default']

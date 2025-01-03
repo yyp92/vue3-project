@@ -30,7 +30,9 @@
                     }
                 }
             },
-            lagend: {},
+            legend: {
+                left: 'center'
+            },
             grid: {
                 left: '3%',
                 right: '4%',
@@ -40,7 +42,10 @@
             xAxis: {
                 type: 'category',
                 boundaryGap: false,
-                data: props.labels
+                data: props.labels,
+                axisLabel: {
+                    interval: 0
+                }
             },
             yAxis: {
                 type: 'value'

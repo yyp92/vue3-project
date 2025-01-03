@@ -24,3 +24,9 @@ export function getGoodsCategoryFavor() {
         url: '/goods/category/favor'
     })
 }
+
+export function getGoodsAddressSale() {
+    return hyRequest.get({
+        url: '/goods/address/sale'
+    })
+}

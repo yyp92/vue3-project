@@ -5,7 +5,13 @@
                 v-for="item in amountList"
                 :key="item.amount"
             >
-                <el-col :span="6">
+                <el-col
+                    :span="6"
+                    :xs="24"
+                    :sm="12"
+                    :md="8"
+                    :lg="6"
+                >
                     <CountCard v-bind="item"/>
                 </el-col>
             </template>
@@ -20,7 +26,7 @@
 
             <el-col :span="10">
                 <ChartCard>
-                    
+                    <MapEchart :map-data="showGoodsAddressSale" />
                 </ChartCard>
             </el-col>
 
@@ -59,7 +65,7 @@
     import useAnalysisStore from '@/store/main/analysis/analysis';
     import CountCard from './components/CountCard.vue'
     import ChartCard from './components/ChartCard.vue'
-    import {PieEchart, LineEchart, RoseEchart, BarEchart} from '@/components/page-echarts'
+    import {PieEchart, LineEchart, RoseEchart, BarEchart, MapEchart} from '@/components/page-echarts'
     import { storeToRefs } from 'pinia';
     import {computed} from 'vue'
 
@@ -70,7 +76,8 @@
         amountList,
         goodsCategoryCount,
         goodsCategorySale,
-        goodsCategoryFavor
+        goodsCategoryFavor,
+        goodsAddressSale
     } = storeToRefs(analysisStore)
 
     const showGoodsCategoryCount = computed(() => {
@@ -98,6 +105,13 @@
             labels,
             values
         }
+    })
+
+    const showGoodsAddressSale = computed(() => {
+        return goodsAddressSale.value.map((item) => ({
+            name: item.address,
+            value: item.count
+        }))
     })
 </script>
 
