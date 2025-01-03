@@ -29,3 +29,22 @@ https://documenter.getpostman.com/view/12387168/TzzDKb12
 
 
 
+
+## 提交代码的约束工具
+```bash
+pnpm add commitizen -D 
+npx commitizen init cz-conventional-changelog --save-dev --save-exact
+
+# 提交代码命令
+npx cz
+## 第一步选择本次提交的类型
+## 第二步选择本次提交修改的范围
+## 第三步选择提交信息
+## 第四步选择本次提交的详细描述
+## 第五步是否是一次重大改变
+## 第六步是否影响某个open issue
+```
+
+
+
+
